@@ -6,4 +6,5 @@ import Icons from "unplugin-icons/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), tailwindcss(), Icons({ compiler: "vue3" })],
+  base: "/landing-vue/",
 });

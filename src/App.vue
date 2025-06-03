@@ -15,6 +15,7 @@ import Refresh from "~icons/lucide/refresh-cw";
 import QrCode from "~icons/lucide/qr-code";
 import Compass from "~icons/lucide/compass";
 import Building from "~icons/lucide/building-2";
+import CloseIcon from "~icons/lucide/x";
 
 // NavigationData
 const navItems = [
@@ -81,6 +82,9 @@ const features = [
   },
 ];
 
+// Route
+const route = useRoute();
+
 //hero Data
 const words = ["Facility", "Gym", "Co-workspaces", "Sport Complex"];
 const currentWord = ref("");
@@ -93,7 +97,11 @@ onMounted(() => {
   }, 1500);
 });
 
-const route = useRoute();
+const isMenuOpen = ref(false);
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
 const handleClick = () => {
   console.log("Clicked");
 };
@@ -108,7 +116,7 @@ const handleClick = () => {
         <!-- Logo -->
         <h1 class="text-lg font-semibold">Facility Hub</h1>
 
-        <!-- Navigation -->
+        <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-12">
           <a
             v-for="(item, index) in navItems"
@@ -116,32 +124,75 @@ const handleClick = () => {
             :href="item.href"
             class="hover:text-gray-400 transition-colors duration-300 rounded-full px-3 py-1"
           >
-            {{ item.label }}</a
-          >
+            {{ item.label }}
+          </a>
         </nav>
 
-        <!-- Actions -->
+        <!-- Actions (Desktop Only) -->
         <div class="hidden md:flex gap-4">
           <Button
             type="secondary"
             :customClasses="'border border-gray-300 hover:bg-green-50/50 rounded-full'"
             @click="handleClick"
-            >Login</Button
           >
+            Login
+          </Button>
           <Button
             type="primary"
             :customClasses="'hover:bg-green-600 rounded-full'"
             @click="handleClick"
-            >Sign Up</Button
           >
+            Sign Up
+          </Button>
         </div>
 
-        <!-- Hamburger Menu -->
+        <!-- Hamburger Menu (Mobile Only) -->
         <div class="md:hidden">
-          <HamburgerMenu class="text-2xl" />
+          <button @click="toggleMenu">
+            <HamburgerMenu class="text-2xl" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        v-if="isMenuOpen"
+        class="fixed inset-0 bg-white shadow-md z-50 flex flex-col items-center p-6"
+      >
+        <button @click="toggleMenu" class="absolute top-4 right-4">
+          <CloseIcon class="text-2xl" />
+        </button>
+
+        <nav class="flex flex-col space-y-6 mt-16">
+          <a
+            v-for="(item, index) in navItems"
+            :key="index"
+            :href="item.href"
+            class="text-xl font-semibold hover:text-gray-400 transition-colors duration-300"
+          >
+            {{ item.label }}
+          </a>
+        </nav>
+
+        <div class="mt-8 flex flex-col space-y-4">
+          <Button
+            type="secondary"
+            class="border border-gray-300 rounded-full"
+            @click="handleClick"
+          >
+            Login
+          </Button>
+          <Button
+            type="primary"
+            class="hover:bg-green-600 rounded-full"
+            @click="handleClick"
+          >
+            Sign Up
+          </Button>
         </div>
       </div>
     </header>
+
     <main id="main" class="min-h-screen pb-10">
       <section id="hero">
         <div
@@ -289,8 +340,8 @@ const handleClick = () => {
             </h2>
             <div class="flex justify-center mt-6">
               <Button
-                type="seconday"
-                class="border border-black bg-black text-white text-xl font-semibold rounded-md"
+                type="secondary"
+                class="border border-black !bg-black text-white text-xl font-semibold rounded-md"
                 @click="handleClick"
                 >Start Now</Button
               >
