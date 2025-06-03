@@ -109,9 +109,9 @@ const handleClick = () => {
 
 <template>
   <div class="grid grid-rows-[auto_1fr_auto]">
-    <header id="header" class="h-20 flex items-center justify-center">
+    <header id="header" class="flex flex-col items-center justify-center">
       <div
-        class="container mx-auto flex items-center justify-between px-6 md:px-8 2xl:px-0"
+        class="container mx-auto h-20 flex items-center justify-between px-6 md:px-8 2xl:px-0"
       >
         <!-- Logo -->
         <h1 class="text-lg font-semibold">Facility Hub</h1>
@@ -148,43 +148,46 @@ const handleClick = () => {
 
         <!-- Hamburger Menu (Mobile Only) -->
         <div class="md:hidden">
-          <button @click="toggleMenu">
-            <HamburgerMenu class="text-2xl" />
-          </button>
+          <HamburgerMenu
+            v-if="!isMenuOpen"
+            @click="toggleMenu"
+            class="text-2xl cursor-pointer"
+          />
+          <CloseIcon
+            v-else
+            @click="toggleMenu"
+            class="text-2xl cursor-pointer"
+          />
         </div>
       </div>
 
       <!-- Mobile Menu -->
       <div
         v-if="isMenuOpen"
-        class="fixed inset-0 bg-white shadow-md z-50 flex flex-col items-center p-6"
+        class="w-full bg-white shadow-md z-50 flex flex-col items-center md:hidden p-6"
       >
-        <button @click="toggleMenu" class="absolute top-4 right-4">
-          <CloseIcon class="text-2xl" />
-        </button>
-
-        <nav class="flex flex-col space-y-6 mt-16">
+        <nav class="flex flex-col space-y-4">
           <a
             v-for="(item, index) in navItems"
             :key="index"
             :href="item.href"
-            class="text-xl font-semibold hover:text-gray-400 transition-colors duration-300"
+            class="text-xl text-center hover:text-gray-400 transition-colors duration-300"
           >
             {{ item.label }}
           </a>
         </nav>
 
-        <div class="mt-8 flex flex-col space-y-4">
+        <div class="w-full mt-8 flex flex-col space-y-4">
           <Button
             type="secondary"
-            class="border border-gray-300 rounded-full"
+            class="w-full border border-gray-300 rounded-md"
             @click="handleClick"
           >
             Login
           </Button>
           <Button
             type="primary"
-            class="hover:bg-green-600 rounded-full"
+            class="w-full hover:bg-green-600 rounded-md"
             @click="handleClick"
           >
             Sign Up
