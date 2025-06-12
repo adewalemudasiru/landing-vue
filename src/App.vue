@@ -1,21 +1,14 @@
 <script setup>
 //Hooks
-import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 //Components
 import Button from "./components/Button.vue";
+import FeaturesSection from "./components/FeaturesSection.vue";
 //Assets
 import heroimg from "./assets/images/heroimg.png";
 import aboutimg from "./assets/images/whoweare.jpeg";
-import HamburgerMenu from "~icons/lucide/menu";
-import Settings from "~icons/lucide/settings";
-import User from "~icons/lucide/users-round";
-import Subscription from "~icons/lucide/gallery-vertical-end";
-import Refresh from "~icons/lucide/refresh-cw";
-import QrCode from "~icons/lucide/qr-code";
-import Compass from "~icons/lucide/compass";
 import Building from "~icons/lucide/building-2";
-import CloseIcon from "~icons/lucide/x";
+import Navbar from "./components/Navbar.vue";
 
 // NavigationData
 const navItems = [
@@ -23,67 +16,6 @@ const navItems = [
   { label: "Features", href: "/features" },
   { label: "Contact", href: "/contact" },
 ];
-
-const features = [
-  {
-    title: "Service Management",
-    description:
-      "Easily add, update, activate, or deactivate services like shared workspaces, gym services, etc. and set prices—all in one place.",
-    icon: Settings,
-    color: "#ffefd4",
-    comingSoon: false,
-    class: "xl:col-span-2 xl:col-start-1 xl:row-start-1",
-    // class: "col-span-4"
-  },
-  {
-    title: "User Onboarding & App access",
-    description:
-      "Invite users to your facility for instant access to services and streamlined onboarding. They also get a web app for easy service access.",
-    icon: User,
-    color: "#e5e5ff",
-    comingSoon: false,
-    class: "xl:col-span-2 xl:col-start-3 xl:row-start-1",
-  },
-  {
-    title: "Subscription Tracking",
-    description:
-      "Track all user subscriptions to your services, helping you manage engagement and renewals.",
-    icon: Subscription,
-    color: "#d4e9d4",
-    comingSoon: false,
-    class: "xl:col-start-1 xl:row-start-2",
-  },
-  {
-    title: "Automated Renewal Reminders",
-    description:
-      "Automatic reminders notify users when subscriptions are about to expire, ensuring seamless renewals.",
-    icon: Refresh,
-    color: "#f6fdcd",
-    comingSoon: true,
-    class: "xl:col-start-2 xl:row-start-2",
-  },
-  {
-    title: "Quick Booking",
-    description:
-      "Users can scan a QR code to instantly book services, making facility access fast and easy.",
-    icon: QrCode,
-    color: "#ffefd4",
-    comingSoon: true,
-    class: "xl:col-start-3 xl:row-start-2",
-  },
-  {
-    title: "Centralized Management Dashboard",
-    description:
-      "Access all your management tools in one intuitive dashboard — no more juggling multiple apps.",
-    icon: Compass,
-    color: "#f6fdcd",
-    comingSoon: false,
-    class: "xl:col-start-4 xl:row-start-2",
-  },
-];
-
-// Route
-const route = useRoute();
 
 //hero Data
 const words = ["Facility", "Gym", "Co-workspaces", "Sport Complex"];
@@ -97,104 +29,23 @@ onMounted(() => {
   }, 1500);
 });
 
-const isMenuOpen = ref(false);
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
+const handleLogin = () => {
+  console.log("Login clicked");
 };
 
-const handleClick = () => {
-  console.log("Clicked");
+const handleSignup = () => {
+  console.log("Sign Up clicked");
 };
 </script>
 
 <template>
   <div class="grid grid-rows-[auto_1fr_auto]">
-    <header id="header" class="flex flex-col items-center justify-center">
-      <div
-        class="container mx-auto h-20 flex items-center justify-between px-6 md:px-8 2xl:px-0"
-      >
-        <!-- Logo -->
-        <h1 class="text-lg font-semibold">Facility Hub</h1>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex space-x-12">
-          <a
-            v-for="(item, index) in navItems"
-            :key="index"
-            :href="item.href"
-            class="hover:text-gray-400 transition-colors duration-300 rounded-full px-3 py-1"
-          >
-            {{ item.label }}
-          </a>
-        </nav>
-
-        <!-- Actions (Desktop Only) -->
-        <div class="hidden md:flex gap-4">
-          <Button
-            type="secondary"
-            :customClasses="'border border-gray-300 hover:bg-green-50/50 rounded-full'"
-            @click="handleClick"
-          >
-            Login
-          </Button>
-          <Button
-            type="primary"
-            :customClasses="'hover:bg-green-600 rounded-full'"
-            @click="handleClick"
-          >
-            Sign Up
-          </Button>
-        </div>
-
-        <!-- Hamburger Menu (Mobile Only) -->
-        <div class="md:hidden">
-          <HamburgerMenu
-            v-if="!isMenuOpen"
-            @click="toggleMenu"
-            class="text-2xl cursor-pointer"
-          />
-          <CloseIcon
-            v-else
-            @click="toggleMenu"
-            class="text-2xl cursor-pointer"
-          />
-        </div>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div
-        v-if="isMenuOpen"
-        class="w-full bg-white shadow-md z-50 flex flex-col items-center md:hidden p-6"
-      >
-        <nav class="flex flex-col space-y-4">
-          <a
-            v-for="(item, index) in navItems"
-            :key="index"
-            :href="item.href"
-            class="text-xl text-center hover:text-gray-400 transition-colors duration-300"
-          >
-            {{ item.label }}
-          </a>
-        </nav>
-
-        <div class="w-full mt-8 flex flex-col space-y-4">
-          <Button
-            type="secondary"
-            class="w-full border border-gray-300 rounded-md"
-            @click="handleClick"
-          >
-            Login
-          </Button>
-          <Button
-            type="primary"
-            class="w-full hover:bg-green-600 rounded-md"
-            @click="handleClick"
-          >
-            Sign Up
-          </Button>
-        </div>
-      </div>
-    </header>
+    <Navbar
+      :navItems="navItems"
+      brand="Facility Hub"
+      @login="handleLogin"
+      @signup="handleSignup"
+    />
 
     <main id="main" class="min-h-screen pb-10">
       <section id="hero">
@@ -234,46 +85,7 @@ const handleClick = () => {
           </div>
         </div>
       </section>
-      <section id="features">
-        <div class="container mx-auto px-6 md:px-8 2xl:px-0 py-10 lg:py-20">
-          <h3 class="text-3xl font-bold text-center capitalize">
-            All your Facility needs in a unified solution
-          </h3>
-          <div
-            class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mt-12"
-            :style="{
-              gridAutoRows: 'max-content',
-            }"
-          >
-            <div
-              v-for="(feature, index) in features"
-              :key="index"
-              :class="feature.class"
-              class="flex flex-col p-6 border border-gray-300 rounded-xl shadow-sm"
-            >
-              <div
-                :style="{ backgroundColor: feature.color }"
-                class="w-fit p-1 rounded-md"
-              >
-                <component :is="feature.icon" class="size-8 text-slate-600" />
-              </div>
-
-              <h4 class="text-2xl font-bold mt-8">{{ feature.title }}</h4>
-              <p class="text-lg mt-4">
-                {{ feature.description }}
-              </p>
-              <div class="mt-2">
-                <Button
-                  type="secondary"
-                  v-if="feature.comingSoon"
-                  class="text-xs text-green-500 border border-green-500 rounded-md !py-1 !px-2"
-                  >Coming Soon</Button
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeaturesSection />
       <section id="banner">
         <div class="w-full bg-gradient-to-r from-[#f0ff00] to-[#59cffa]">
           <div

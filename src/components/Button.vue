@@ -32,7 +32,7 @@ export default {
   computed: {
     baseClasses() {
       return [
-        "px-4 py-2 transition-colors duration-300",
+        "px-4 py-2 transition-colors duration-300 cursor-pointer",
         this.type === "primary"
           ? "bg-green-800 text-white hover:bg-blue-600"
           : "",
